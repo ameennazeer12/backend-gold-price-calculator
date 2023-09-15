@@ -87,7 +87,7 @@ def read_item(city: str):
 
 
 @app.get("/calculate-gold-price/{gold_price}")
-def calculate_gold_price(gold_price: str,weight_in_gms: float | None = None,making_charge: float | None = None):
+def calculate_gold_price(gold_price: str,weight_in_gms: Union[float, None] = None,making_charge: Union[float, None] = None):
     if weight_in_gms is None:
         weight_in_gms = 1
     if making_charge is None:
