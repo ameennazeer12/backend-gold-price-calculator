@@ -1,7 +1,5 @@
 from fastapi import FastAPI, APIRouter
-from typing import Union
 from pydantic import BaseModel
-import re
 import requests
 from bs4 import BeautifulSoup
 from utils.response_util import ResponseUtil,ResponseOut,BadResponseOut
@@ -13,9 +11,9 @@ router = APIRouter()
     "/get-location-list",
     tags=["Gold Price Calculator"],
     responses={
-    200: {"model": ResponseOut},
-    404: {"model": ResponseOut},
-    500: {"model": BadResponseOut}
+        200: {"model": ResponseOut},
+        404: {"model": ResponseOut},
+        500: {"model": BadResponseOut}
     },
     )
 

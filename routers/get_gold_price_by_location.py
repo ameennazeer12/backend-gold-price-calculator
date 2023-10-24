@@ -1,7 +1,6 @@
 from fastapi import FastAPI, APIRouter
 from typing import Union
 from pydantic import BaseModel
-import re
 import requests
 from bs4 import BeautifulSoup
 from utils.response_util import ResponseUtil,ResponseOut,BadResponseOut
@@ -16,9 +15,9 @@ class LocationRequest(BaseModel):
     "/gold-price-by-location",
     tags=["Gold Price Calculator"],
     responses={
-    200: {"model": ResponseOut},
-    404: {"model": ResponseOut},
-    500: {"model": BadResponseOut}
+        200: {"model": ResponseOut},
+        404: {"model": ResponseOut},
+        500: {"model": BadResponseOut}
     },
     )
 
