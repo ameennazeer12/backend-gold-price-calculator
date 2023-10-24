@@ -1,7 +1,5 @@
-from fastapi import APIRouter
+from fastapi import FastAPI, APIRouter
 from typing import Union
-
-from fastapi import FastAPI
 from pydantic import BaseModel
 import re
 import requests
@@ -23,13 +21,14 @@ class LocationRequest(BaseModel):
     500: {"model": BadResponseOut}
     },
     )
+
 def get_gold_price_by_location(location_request: LocationRequest):
     try:
         location = location_request.location
+        location_formatted = location.replace(" ","-")
         gold_price = ""
         # Define the URL of the website you want to scrape
-            
-        url = f"https://www.goodreturns.in/gold-rates/{location}.html"
+        url = f"https://www.goodreturns.in/gold-rates/{location_formatted}.html"
         headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'}
         # Send an HTTP GET request to the URL
         try:
@@ -43,7 +42,6 @@ def get_gold_price_by_location(location_request: LocationRequest):
             # Parse the HTML content of the page using Beautiful Soup
             soup = BeautifulSoup(response.text, 'html.parser')
 
-
             # Find the <div id="current-price"> element
             current_price_div = soup.find('div', id='current-price')
 
@@ -55,22 +53,20 @@ def get_gold_price_by_location(location_request: LocationRequest):
             else:
                 LoggerUtil.error(f"Couldn't find the 'current-price' div on the page.")
                 return ResponseUtil.api_response(
-                    data={"gold_price": gold_price, "location": location},
+                    data={"location": location},
                     message="Failed to retrieve the gold price for the requested location",
                     response_code="404",
                     status_code=404
                     )
-
-            
         else:
             LoggerUtil.error(f"Failed to retrieve the web page. Status code: {response.status_code}")
             return ResponseUtil.api_response(
-                data={"gold_price": gold_price, "location": location},
+                data={"location": location},
                 message="Failed to retrieve the gold price for the requested location",
                 response_code="404",
                 status_code=404
                 )
-
+        print(f"location3 {location}")
         return ResponseUtil.api_response(
                 data={"gold_price": gold_price, "location": location},
                 message="Today's gold price for the requested location returned",
