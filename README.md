@@ -3,8 +3,7 @@ Backend for Gold Price Calculator App
 
 Welcome to the Backend for Gold Price Calculator project. This repository contains the server-side code for a FastAPI-based API's that calculates the buying cost of gold based on location, current gold price, weight in gms and making charge.
 
-Github Url - https://github.com/ameennazeer12/backend-gold-price-calculator
-Deployed Url - https://backend-gold-price-calculator.onrender.com/docs (May take upto 1 min to load as Render(free service) has to spin up an backend instance)
+Deployed Url - https://backend-gold-price-calculator.onrender.com/docs (May take upto 1 min to load as Render(free service) has to spin up an backend instance).
 
 ## Project Overview
 
