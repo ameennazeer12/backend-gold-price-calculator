@@ -1,0 +1,196 @@
+openapi: 3.1.0
+info:
+  title: Gold Price Calculator
+  version: 0.1.0
+paths:
+  /get-location-list:
+    get:
+      tags:
+        - Gold Price Calculator
+      summary: Get Location List
+      operationId: get_location_list_get_location_list_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseOut'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseOut'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadResponseOut'
+  /gold-price-by-location:
+    post:
+      tags:
+        - Gold Price Calculator
+      summary: Get Gold Price By Location
+      operationId: get_gold_price_by_location_gold_price_by_location_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LocationRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseOut'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadResponseOut'
+  /calculate-gold-buying-amount:
+    post:
+      tags:
+        - Gold Price Calculator
+      summary: Calculate Gold Buying Amount
+      operationId: calculate_gold_buying_amount_calculate_gold_buying_amount_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BuyingGoldRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadResponseOut'
+components:
+  schemas:
+    BadResponseOut:
+      properties:
+        detail:
+          $ref: '#/components/schemas/ErrorOut'
+      type: object
+      required:
+        - detail
+      title: BadResponseOut
+    BuyingGoldRequest:
+      properties:
+        gold_price_today:
+          type: string
+          title: Gold Price Today
+        weight_in_gms:
+          anyOf:
+            - type: number
+            - type: 'null'
+          title: Weight In Gms
+        making_charge:
+          anyOf:
+            - type: number
+            - type: 'null'
+          title: Making Charge
+      type: object
+      required:
+        - gold_price_today
+      title: BuyingGoldRequest
+    ErrorOut:
+      properties:
+        message:
+          type: string
+          title: Message
+        response_code:
+          type: string
+          title: Response Code
+      type: object
+      required:
+        - message
+        - response_code
+      title: ErrorOut
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    LocationRequest:
+      properties:
+        location:
+          type: string
+          title: Location
+      type: object
+      required:
+        - location
+      title: LocationRequest
+    ResponseOut:
+      properties:
+        data:
+          type: object
+          title: Data
+        message:
+          type: string
+          title: Message
+        response_code:
+          type: string
+          title: Response Code
+      type: object
+      required:
+        - data
+        - message
+        - response_code
+      title: ResponseOut
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+              - type: string
+              - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+        - loc
+        - msg
+        - type
+      title: ValidationError
