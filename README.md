@@ -29,20 +29,23 @@ Before you begin, ensure you have the following installed on your system:
 
 2. Create a virtual environment
 
+    ```bash
     python -m venv venv
     source venv/bin/activate  # On Windows, use: venv\Scripts\activate
 
 3. Install the required dependencies
 
+    ```bash
     pip install -r requirements.txt
 
 4. To run the Application, use the following command
 
+    ```bash
     uvicorn main:app --reload
 
-    This will start the server, and the API's will be accessible at http://localhost:8000/docs.
+This will start the server, and the API's will be accessible at http://localhost:8000/docs.
 
-    Open API Spec can be found at http://localhost:8000/redoc
+Open API Spec can be found at http://localhost:8000/redoc.
 
 
 ### API Endpoints
